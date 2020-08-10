@@ -22,6 +22,6 @@ app.get('/',(req,res)=>{
 });
 app.use('/user',userroute);
 
-app.listen(4344,()=>{
+app.listen(8080,()=>{
     console.log("server running on http://localhost:4242/")
 });
