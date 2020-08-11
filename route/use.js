@@ -46,6 +46,18 @@ router.route('/register').post((req,res)=> {
 });
 
 });
+router.get('/user/signin',(req,res)=>{
+    if(req.session.user){
+        res.render('dashboard',{
+            title:req.session.user.name,
+            email:req.session.user.email,
+            pass:req.session.user.pass});
+
+    }
+    else{
+        res.redirect('/user/login')
+    }
+});
 
 router.route('/signin').post((req,res)=>{
     usersch.findOne({name:req.body.name,pass:req.body.pass,email:req.body.email},function(err,docs) {
@@ -58,14 +70,24 @@ router.route('/signin').post((req,res)=>{
         }
         else {
             req.session.user=docs;
-            res.render('dashboard',{
-            title:req.body.name,
-            email:req.body.email,
-            pass:req.body.pass
-        });}
+            res.redirect('/user/u');
+        }
         
             });
 
+});
+
+
+router.route('/u').get((req,res)=>{
+    if(req.session.user){
+       res.render('dashboard',{
+            title:req.session.user.name,
+            email:req.session.user.email,
+            pass:req.session.user.pass});
+    }
+    else{
+        res.send("session timeout");
+    }
 });
 router.route('/logout').get((req,res)=>{
     if(req.session.user) {

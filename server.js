@@ -20,15 +20,14 @@ const userroute=require('./route/use');
 app.get('/',(req,res)=>{
     
     if(req.session.user) {
-res.render('dashboard',{title:req.session.user.name,
-email:req.session.user.email,pass:req.session.user.pass
-});
+       
+res.render('main',{dash:'<a href="/user/u">Dashboard</a>'});
 }
-else{res.render('main');
+else{res.render('main',{dash: ' '});
 }
 });
 app.use('/user',userroute);
 
 app.listen(8080,()=>{
-    console.log("server running on http://localhost:4242/")
+    console.log("server running on http://localhost:8080/")
 });
