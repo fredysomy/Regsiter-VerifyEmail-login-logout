@@ -19,7 +19,7 @@ app.use(session({
     resave: false,
     saveUninitialized: true,
     unset: 'destroy',
-    store: store,
+    store: store
     
 }));
 router.route('/').get((req,res)=> {
@@ -70,6 +70,7 @@ router.route('/signin').post((req,res)=>{
 router.route('/logout').get((req,res)=>{
     if(req.session.user) {
         delete req.session.user;
+        delete req.session;
         res.redirect('/user/login');
     } else {
         res.redirect('/user/login');
