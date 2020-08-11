@@ -18,7 +18,7 @@ mon.connection.once("open", (err)=>{
 });
 const userroute=require('./route/use');
 app.get('/',(req,res)=>{
-    res.redirect('/user')
+    res.render('main');
 });
 app.use('/user',userroute);
 
