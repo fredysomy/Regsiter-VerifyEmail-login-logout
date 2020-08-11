@@ -1,8 +1,27 @@
 var router=require('express').Router();
 var path= require('path');
+var bodyParser=require('body-parser');
+const express = require('express');
+const session = require('express-session');
+const MongoDBStore = require('connect-mongodb-session')(session);
+app=express();
+app.set('view engine','ejs');
 app.set('views',path.join("views"));
 let usersch=require('../models/user.model');
-
+app.use(bodyParser.urlencoded({extended:false}));
+app.use(bodyParser.json());
+const store = new MongoDBStore({
+    uri: process.env.ATLAS_URI,
+    collection: 'sessions'
+}); 
+app.use(session({
+    secret: process.env.SESSION_ID,
+    resave: false,
+    saveUninitialized: true,
+    unset: 'destroy',
+    store: store,
+    
+}));
 router.route('/').get((req,res)=> {
     res.render('index');
  
@@ -37,13 +56,24 @@ router.route('/signin').post((req,res)=>{
             res.send('Wrong credentials<br>Please register-<a href="/user">Register</a>')
            
         }
-        else {res.render('dashboard',{
+        else {
+            req.session.user=docs;
+            res.render('dashboard',{
             title:req.body.name,
             email:req.body.email,
             pass:req.body.pass
         });}
+        
             });
 
+});
+router.route('/logout').get((req,res)=>{
+    if(req.session.user) {
+        delete req.session.user;
+        res.redirect('/user/login');
+    } else {
+        res.redirect('/user/login');
+    }        
 });
 
 module.exports=router;
