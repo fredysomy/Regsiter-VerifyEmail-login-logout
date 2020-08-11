@@ -16,7 +16,7 @@ const store = new MongoDBStore({
 }); 
 app.use(session({
     secret: process.env.SESSION_ID,
-    resave: false,
+    resave: true,
     saveUninitialized: true,
     unset: 'destroy',
     store: store
@@ -70,7 +70,7 @@ router.route('/signin').post((req,res)=>{
 router.route('/logout').get((req,res)=>{
     if(req.session.user) {
         delete req.session.user;
-        delete req.session;
+        
         res.redirect('/user/login');
     } else {
         res.redirect('/user/login');
