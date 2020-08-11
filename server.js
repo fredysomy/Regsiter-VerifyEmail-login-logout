@@ -18,7 +18,14 @@ mon.connection.once("open", (err)=>{
 });
 const userroute=require('./route/use');
 app.get('/',(req,res)=>{
-    res.render('main');
+    
+    if(req.session.user) {
+res.render('dashboard',{title:req.session.user.name,
+email:req.session.user.email,pass:req.session.user.pass
+});
+}
+else{res.render('main');
+}
 });
 app.use('/user',userroute);
 
