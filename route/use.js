@@ -1,5 +1,7 @@
 var router=require('express').Router();
 var path= require('path');
+var bcy=require('bcrypt');
+const saltRounds = 10;
 var bodyParser=require('body-parser');
 const express = require('express');
 const session = require('express-session');
@@ -20,8 +22,10 @@ app.use(session({
     saveUninitialized: true,
     unset: 'destroy',
     store: store
+   
     
 }));
+
 router.route('/').get((req,res)=> {
     res.render('index');
  
@@ -32,26 +36,31 @@ router.route('/login').get((req,res)=>{
 })
 
 router.route('/register').post((req,res)=> {
-    const somem=new usersch()
-    somem.name=req.body.name;
-    somem.email=req.body.email;
-    somem.pass=req.body.pass;
-    somem.save((err,doc)=>{
-    if(!err){
-        res.redirect('/user/login');
-    }
-    else{
-        res.send("user exists");
-    }
-});
+    
+    bcy.hash(req.body.pass, 10, function(err, hash) {
+        const somem=new usersch()
+        somem.realname=req.body.realname,
+        somem.name=req.body.name;
+        somem.email=req.body.email;
+        somem.pass=hash;
+        somem.save((err,doc)=>{
+        if(!err){
+            res.redirect('/user/login');
+        }
+        else{
+            res.send("user exists");
+        }
+    });
+    });
+   
 
 });
 router.get('/user/signin',(req,res)=>{
     if(req.session.user){
         res.render('dashboard',{
-            title:req.session.user.name,
-            email:req.session.user.email,
-            pass:req.session.user.pass});
+            title:req.session.user.realname,
+            title2:req.session.user.name,
+            email:req.session.user.email});
 
     }
     else{
@@ -60,30 +69,41 @@ router.get('/user/signin',(req,res)=>{
 });
 
 router.route('/signin').post((req,res)=>{
-    usersch.findOne({name:req.body.name,pass:req.body.pass,email:req.body.email},function(err,docs) {
-        if(err){
-            res.send("unauth")
+    usersch.findOne({email:req.body.email})
+    .then((user)=>{
+        if(!user){
+            res.send("no")
         }
-        if(!docs){
-            res.send('Wrong credentials<br>Please register-<a href="/user">Register</a>')
-           
-        }
-        else {
-            req.session.user=docs;
-            res.redirect('/user/u');
-        }
-        
-            });
+        else{
+            bcy.compare(req.body.pass,user.pass,(err,result)=>{
+                if(result==true){
+                    req.session.user=user;
+                    res.redirect('/user/u');
+                }
+                if (err) {
+                    res.send("unauth")
+                    
+                } 
+                if(result==false){
+                    res.send('Wrong credentials<br>Please register-<a href="/user">Register</a>');
+                }
 
+
+                
+            });
+        }
+    })
+ 
 });
 
 
 router.route('/u').get((req,res)=>{
     if(req.session.user){
        res.render('dashboard',{
-            title:req.session.user.name,
-            email:req.session.user.email,
-            pass:req.session.user.pass});
+            title:req.session.user.realname,
+            title2:req.session.user.name,
+            email:req.session.user.email
+            });
     }
     else{
         res.send("session timeout");
