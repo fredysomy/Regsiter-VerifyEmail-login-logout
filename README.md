@@ -11,8 +11,8 @@
 <code>npm start</code><br>
 
 ## <u>Extra features:</u><br>
-### 1.Login and register.✅<br>
-### 2.Password Encryption.✅<br>
-### 3.Login and logout sessions using cookies.✅<br>
-### 4.Email verification.<br>
+#### 1.Login and register.✅<br>
+#### 2.Password Encryption.✅<br>
+#### 3.Login and logout sessions using cookies.✅<br>
+#### 4.Email verification.<br>
 
