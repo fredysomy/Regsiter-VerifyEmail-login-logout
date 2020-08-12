@@ -69,7 +69,7 @@ router.get('/user/signin',(req,res)=>{
 });
 
 router.route('/signin').post((req,res)=>{
-    usersch.findOne({email:req.body.email})
+    usersch.findOne({name:req.body.name,email:req.body.email})
     .then((user)=>{
         if(!user){
             res.send("no")
