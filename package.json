@@ -18,7 +18,9 @@
     "express": "^4.17.1",
     "express-session": "^1.17.1",
     "mongoose": "^5.9.28",
-    "path": "^0.12.7"
+    "nodemailer": "^6.4.11",
+    "path": "^0.12.7",
+    "rand-token": "^1.0.1"
   },
   "devDependencies": {
     "nodemon": "^2.0.4"

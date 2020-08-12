@@ -1,6 +1,7 @@
 var router=require('express').Router();
 var path= require('path');
 var bcy=require('bcrypt');
+var nm=require('nodemailer');
 const saltRounds = 10;
 var bodyParser=require('body-parser');
 const express = require('express');
@@ -32,7 +33,7 @@ router.route('/').get((req,res)=> {
 });
 
 router.route('/login').get((req,res)=>{
-    res.render('login');
+    res.render('login',{err:""});
 })
 
 router.route('/register').post((req,res)=> {
@@ -43,6 +44,7 @@ router.route('/register').post((req,res)=> {
         somem.name=req.body.name;
         somem.email=req.body.email;
         somem.pass=hash;
+
         somem.save((err,doc)=>{
         if(!err){
             res.redirect('/user/login');
@@ -72,7 +74,7 @@ router.route('/signin').post((req,res)=>{
     usersch.findOne({name:req.body.name,email:req.body.email})
     .then((user)=>{
         if(!user){
-            res.send("no")
+            res.render('login',{err:'<h6 style="color:red;"></h6>User does not exist</h6><br><a href="/user/login">Try again</a><br>'});
         }
         else{
             bcy.compare(req.body.pass,user.pass,(err,result)=>{
@@ -81,11 +83,12 @@ router.route('/signin').post((req,res)=>{
                     res.redirect('/user/u');
                 }
                 if (err) {
-                    res.send("unauth")
+                    res.render('login',{err:'<h6 style="color:red;"></h6>Username or password does not match</h6><br><a href="/user/login">Try again</a><br>'});
                     
                 } 
                 if(result==false){
-                    res.send('Wrong credentials<br>Please register-<a href="/user">Register</a>');
+                    res.render('login',{err:'<h6 style="color:red;"></h6>Wrong credentials<br>Please register-</h6><br><a href="/user/login">Try again</a><br>'});
+                    
                 }
 
 
@@ -118,5 +121,8 @@ router.route('/logout').get((req,res)=>{
         res.redirect('/user/login');
     }        
 });
+
+
+
 
 module.exports=router;
