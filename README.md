@@ -10,6 +10,12 @@
     * 4.Email verification.👨🏻‍💻<br>
   * <u>Credentials Update</u><br>
     * Brainstorming, not started yet.💡💡🤔🤔.<br>
+  * Adding a post to public<br>
+    * Yet to start🤔🤔
+  * Commenting to the posts.<br>
+    * Yet to start 🤔🤔<br>
+  * Frontend (UI) <br>
+    * Updating on the way.<br>
 
 ### This is a ongoing project and i am adding all the parts step by step..
 
