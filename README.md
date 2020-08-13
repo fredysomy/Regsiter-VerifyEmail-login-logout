@@ -1,4 +1,4 @@
-# Social media like app<br>
+# Minimal version of Facebook<br>
 
 ### MongoDB,Express,node..<br>
 
