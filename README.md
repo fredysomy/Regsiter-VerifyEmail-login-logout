@@ -3,7 +3,7 @@
 ### MongoDB,Express,node..<br>
 
 #### <code><u>Features added till now:</u><br></code>
-  * <u>Authentication part.✅✅✅</u><br>
+  * <u>✅Authentication part.✅</u>(Complete)<br>
     * 1.Login and register.✅<br>
     * 2.Password Encryption.✅<br>
     * 3.Login and logout sessions using cookies.✅<br>
