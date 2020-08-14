@@ -18,9 +18,11 @@
   * Frontend (UI) <br>
     * Updating on the way.<br>
 #### _`Some features i wish to add`_ <br>
-  * Personal meassages 
-  * Live video stream
-  * Like and dislike <br>
+  * Personal meassages. 
+  * Live video stream.
+  * Like and dislike. <br>
+  * Communities.
+  * Freinds concept.
 
 #### _`This is a ongoing project and i am adding all the parts step by step..`_
 
