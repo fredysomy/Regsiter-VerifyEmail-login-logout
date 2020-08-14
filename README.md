@@ -17,12 +17,12 @@
     * Yet to start 🤔🤔<br>
   * Frontend (UI) <br>
     * Updating on the way.<br>
-#### Some features i wish to add <br>
+#### _`Some features i wish to add`_ <br>
   * Personal meassages 
   * Live video stream
   * Like and dislike <br>
 
-#### This is a ongoing project and i am adding all the parts step by step..
+#### _`This is a ongoing project and i am adding all the parts step by step..`_
 
 
 
