@@ -12,6 +12,7 @@
     * Brainstorming, not started yet.💡💡🤔🤔.<br>
   * Adding a post to public<br>
     * Yet to start🤔🤔
+  * Search a user by username.
   * Commenting to the posts.<br>
     * Yet to start 🤔🤔<br>
   * Frontend (UI) <br>
@@ -21,11 +22,11 @@
   * Live video stream
   * Like and dislike <br>
 
-### This is a ongoing project and i am adding all the parts step by step..
+#### This is a ongoing project and i am adding all the parts step by step..
 
 
 
-### Run the repo <br>
+#### Run the repo <br>
 
 <code>npm install</code><br>
 <code>npm start</code><br>
