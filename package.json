@@ -19,6 +19,7 @@
     "express-session": "^1.17.1",
     "mongoose": "^5.9.28",
     "nodemailer": "^6.4.11",
+    "nodemailer-sparkpost-transport": "^2.2.0",
     "path": "^0.12.7",
     "rand-token": "^1.0.1"
   },

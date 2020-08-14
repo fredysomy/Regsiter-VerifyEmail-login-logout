@@ -2,7 +2,10 @@ var router=require('express').Router();
 var path= require('path');
 var bcy=require('bcrypt');
 var nm=require('nodemailer');
+var randtoken=require('rand-token')
 const saltRounds = 10;
+
+require('dotenv').config()
 var bodyParser=require('body-parser');
 const express = require('express');
 const session = require('express-session');
@@ -11,6 +14,8 @@ app=express();
 app.set('view engine','ejs');
 app.set('views',path.join("views"));
 let usersch=require('../models/user.model');
+let tksc=require('../models/token.model');
+const { getMaxListeners } = require('../models/user.model');
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
 const store = new MongoDBStore({
@@ -23,19 +28,13 @@ app.use(session({
     saveUninitialized: true,
     unset: 'destroy',
     store: store
-   
-    
 }));
-
 router.route('/').get((req,res)=> {
     res.render('index');
- 
-});
-
+ });
 router.route('/login').get((req,res)=>{
     res.render('login',{err:""});
 })
-
 router.route('/register').post((req,res)=> {
     
     bcy.hash(req.body.pass, 10, function(err, hash) {
@@ -44,18 +43,43 @@ router.route('/register').post((req,res)=> {
         somem.name=req.body.name;
         somem.email=req.body.email;
         somem.pass=hash;
-
+       
         somem.save((err,doc)=>{
         if(!err){
-            res.redirect('/user/login');
-        }
-        else{
-            res.send("user exists");
-        }
+            var tk=new tksc({ _userId: somem._id, token: randtoken.generate(16)});
+            tk.save();
+            
+         
+            var transporter = nm.createTransport(
+                { service: 'gmail',
+                host: 'smtp.example.com',
+                port: 587,
+                secure: true,
+                auth: {user: process.env.GMAIL , pass: process.env.PASS }}
+                );
+            var mailOptions = {from: 'fredysomy@gmail.com' ,to: somem.email ,subject: 'PLEASE USE THE BELOW TOKEN AS YOUR VERIFICATION',text: tk.token};
+              
+              transporter.sendMail(mailOptions, function(error, info){
+                if (error) {
+                  console.log(error);
+                } else {
+                  console.log('Email sent: ' + info.response);
+                }
+              });
+              res.render('verify');
+              router.route('/register/verify').post((req,res)=>{
+                  tksc.findOne({token:req.body.tokken},(err,doc)=>{
+                    usersch.update({_id:doc._userId},{"$set":{"verify":true}})
+                    .then(res.redirect('/user/login'));
+                       
+                });
+             });
+             }
+    else{
+        res.send("user exists");
+    }
     });
-    });
-   
-
+   });
 });
 router.get('/user/signin',(req,res)=>{
     if(req.session.user){
@@ -63,13 +87,11 @@ router.get('/user/signin',(req,res)=>{
             title:req.session.user.realname,
             title2:req.session.user.name,
             email:req.session.user.email});
-
-    }
+        }
     else{
         res.redirect('/user/login')
     }
 });
-
 router.route('/signin').post((req,res)=>{
     usersch.findOne({name:req.body.name,email:req.body.email})
     .then((user)=>{
@@ -79,21 +101,20 @@ router.route('/signin').post((req,res)=>{
         else{
             bcy.compare(req.body.pass,user.pass,(err,result)=>{
                 if(result==true){
-                    req.session.user=user;
-                    res.redirect('/user/u');
+                    if(user.verify==true)
+                    {req.session.user=user;
+                    res.redirect('/user/u');}
+                    else{
+                        console.log("not verified")
+                    }
                 }
                 if (err) {
                     res.render('login',{err:'<h6 style="color:red;"></h6>Username or password does not match</h6><br><a href="/user/login">Try again</a><br>'});
-                    
-                } 
+                    } 
                 if(result==false){
                     res.render('login',{err:'<h6 style="color:red;"></h6>Wrong credentials<br>Please register-</h6><br><a href="/user/login">Try again</a><br>'});
-                    
-                }
-
-
-                
-            });
+                    }
+                });
         }
     })
  

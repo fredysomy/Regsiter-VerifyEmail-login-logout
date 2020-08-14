@@ -14,16 +14,11 @@
         <h1 class="display-4">Login</h1>
         <div class="row" style="margin:0 5%;">
         <div class="col-lg-3 col-sm-10 border border-primary rounded" style="margin:0 3%;" align="center">
-<form class="form-gruop" autocomplete="off" method="POST" action="/user/signin">
+<form class="form-gruop" autocomplete="off" method="POST" action="/user/register/verify">
 
     <label class="lead" for id="one">Name</label><br>
-    <input  class="form-control" id="one" type="text" name="name" required="required"><br>
-    <label class="lead" for id="two">Email</label><br>
-    <input   class="form-control" id="two" type="text" name="email" required="required"><br>
-    <label class="lead" for id="rwo">Password</label><br>
-    <input   class="form-control" id="rwo" type="password" name="pass" required="required"><br>
-    <%- err %>
-    <a href="/user">Register</a>
+    <input  class="form-control" id="one" type="text" name="tokken"><br>
+    
     <button class="btn btn-primary">Submit</button><br>
    
 </form>
