@@ -48,24 +48,16 @@ router.route('/register').post((req,res)=> {
         if(!err){
             var tk=new tksc({ _userId: somem._id, token: randtoken.generate(16)});
             tk.save();
-            
-         
-            var transporter = nm.createTransport(
-                { service: 'gmail',
-                host: 'smtp.example.com',
-                port: 587,
-                secure: true,
-                auth: {user: process.env.GMAIL , pass: process.env.PASS }}
-                );
-            var mailOptions = {from: 'fredysomy@gmail.com' ,to: somem.email ,subject: 'PLEASE USE THE BELOW TOKEN AS YOUR VERIFICATION',text: tk.token};
-              
-              transporter.sendMail(mailOptions, function(error, info){
-                if (error) {
-                  console.log(error);
-                } else {
-                  console.log('Email sent: ' + info.response);
-                }
-              });
+            const sgMail = require('@sendgrid/mail');
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+const msg = {
+  to: somem.email,
+  from: 'fredysomy@gmail.com',
+  subject: 'Sending with Twilio SendGrid is Fun',
+  text: "hi.."+tk.token ,
+  html: '<strong>'+tk.token+'</strong>',
+       };
+            sgMail.send(msg);
               res.render('verify');
               router.route('/register/verify').post((req,res)=>{
                   tksc.findOne({token:req.body.tokken},(err,doc)=>{
