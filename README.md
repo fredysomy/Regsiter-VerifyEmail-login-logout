@@ -2,7 +2,7 @@
 
 ### MongoDB,Express,node..<br>
 
-#### <code><u>Features added till now:</u><br></code>
+#### <u>Features added till now:</u><br>
   * <u>✅Authentication part.✅</u>(Complete)<br>
     * 1.Login and register.✅<br>
     * 2.Password Encryption.✅<br>
@@ -16,6 +16,10 @@
     * Yet to start 🤔🤔<br>
   * Frontend (UI) <br>
     * Updating on the way.<br>
+#### Some features i wish to add <br>
+  * Personal meassages 
+  * Live video stream
+  * Like and dislike <br>
 
 ### This is a ongoing project and i am adding all the parts step by step..
 
