@@ -29,6 +29,8 @@ app.use(session({
     unset: 'destroy',
     store: store
 }));
+req.session.cookie.expires=new Date(Date.now()+1000*3600*24;
+req.session.cookie.secure=true;
 router.route('/').get((req,res)=> {
     res.render('index',{err: ""});
     console.log(req.get('host'))
