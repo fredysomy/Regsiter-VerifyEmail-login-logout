@@ -11,15 +11,15 @@
 </head>
 <body>
     <div align="center">
-        <h1 class="display-4">Login</h1>
+        <h1 class="display-4">Email Verification</h1>
         <div class="row" style="margin:0 5%;">
         <div class="col-lg-3 col-sm-10 border border-primary rounded" style="margin:0 3%;" align="center">
 <form class="form-gruop" autocomplete="off" method="POST" action="/user/register/verify">
-
-    <label class="lead" for id="one">Name</label><br>
-    <input  class="form-control" id="one" type="text" name="tokken"><br>
+<p class="lead text-muted">A unique token has been sent to your registerd email..please copy paste the code below..</p>
+    <label class="lead" for id="one">Enter Unique Token</label><br>
+    <input  class="form-control" id="one" type="text" placeholder="Token.." name="tokken"><br>
     
-    <button class="btn btn-primary">Submit</button><br>
+    <button class="btn btn-primary">Verify</button><br>
    
 </form>
 </div></div>
