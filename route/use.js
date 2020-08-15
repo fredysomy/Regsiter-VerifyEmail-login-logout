@@ -30,7 +30,8 @@ app.use(session({
     store: store
 }));
 router.route('/').get((req,res)=> {
-    res.render('index');
+    res.render('index',{err: ""});
+    console.log(req.get('host'))
  });
 router.route('/login').get((req,res)=>{
     res.render('login',{err:""});
@@ -43,6 +44,7 @@ router.route('/register').post((req,res)=> {
         somem.name=req.body.name;
         somem.email=req.body.email;
         somem.pass=hash;
+        
        
         somem.save((err,doc)=>{
         if(!err){
@@ -50,25 +52,21 @@ router.route('/register').post((req,res)=> {
             tk.save();
             const sgMail = require('@sendgrid/mail');
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+url=req.get('host')+"/user/verify/"+tk.token;
 const msg = {
   to: somem.email,
   from: 'fredysomy@gmail.com',
   subject: 'Sending with Twilio SendGrid is Fun',
   text: "hi.."+tk.token ,
-  html: '<strong>'+tk.token+'</strong>',
+  html: `<a href="${url}">${url}</a>`,
        };
             sgMail.send(msg);
-              res.render('verify');
-              router.route('/register/verify').post((req,res)=>{
-                  tksc.findOne({token:req.body.tokken},(err,doc)=>{
-                    usersch.update({_id:doc._userId},{"$set":{"verify":true}})
-                    .then(res.redirect('/user/login'));
-                       
-                });
-             });
+            res.send("email has been sent")
+              
              }
     else{
-        res.send("user exists");
+        
+        res.render('index',{err:'<p style="color:red;">User exists <br> Change username</p>'})
     }
     });
    });
@@ -83,6 +81,14 @@ router.get('/user/signin',(req,res)=>{
     else{
         res.redirect('/user/login')
     }
+});
+
+router.route('/verify/:id').get((req,res)=>{
+    tksc.findOne({token:req.params.id},(err,doc)=>{
+        usersch.update({_id:doc._userId},{"$set":{"verify":true}})
+        .then(res.redirect('/user/login'));
+    });
+    
 });
 router.route('/signin').post((req,res)=>{
     usersch.findOne({name:req.body.name,email:req.body.email})

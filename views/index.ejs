@@ -17,7 +17,7 @@
         <div class="row" style="margin:0 5%;">
         <div class="col-lg-3 col-sm-10 border border-primary rounded" style="margin:5% auto;" align="center">
 <form class="form-gruop" autocomplete="off" method="POST" action="/user/register">
-
+    
     <label class="lead" for id="one">Name</label><br>
     <input  class="form-control" id="one" type="text" name="realname" required="required"><br>
     <label class="lead" for id="one">Username</label><br>
@@ -25,7 +25,9 @@
     <label class="lead" for id="two">Email</label><br>
     <input   class="form-control" id="two" type="text" name="email" required="required"><br>
     <label class="lead" for id="rwo">Password</label><br>
+   
     <input   class="form-control" id="rwo" type="password" name="pass" required="required"><br>
+    <%- err %><br>
     <a href="/user/login">Login</a>
     <button class="btn btn-primary">Submit</button><br>
     
@@ -33,7 +35,9 @@
     
     </div>
     </div>
-    
+    <script>
+       
+    </script>
 </body>
 </html>
 
