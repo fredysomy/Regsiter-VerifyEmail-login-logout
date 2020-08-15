@@ -97,7 +97,7 @@ router.route('/signin').post((req,res)=>{
                     {req.session.user=user;
                     res.redirect('/user/u');}
                     else{
-                        console.log("not verified")
+                        res.render('login',{err:'<h6 style="color:red;"></h6>User not verified</h6><br><a href="/user/login">Try again</a><br>'});
                     }
                 }
                 if (err) {
