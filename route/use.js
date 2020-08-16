@@ -58,7 +58,7 @@ const msg = {
   from: 'fredysomy@gmail.com',
   subject: 'Sending with Twilio SendGrid is Fun',
   text: "hi.."+tk.token ,
-  html: `<a href="${url}"><button>Verify</button></a>`,
+  html: `<p>Verify email of ${somem.name}</p><br><a href="${url}"><button>Click Here to Verify</button></a>`,
        };
             sgMail.send(msg);
             res.send("email has been sent")
