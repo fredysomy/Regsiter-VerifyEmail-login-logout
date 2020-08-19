@@ -1,4 +1,4 @@
-# My own bloging site<br>
+# Register-Verify Email-Login system<br>
 
 ### MongoDB,Express,node..<br>
 
@@ -10,13 +10,7 @@
     * 4.Email verification.✅<br>
   * <u>Credentials Update</u><br>
     * Brainstorming, not started yet.💡💡🤔🤔.<br>
-  * Adding a blog to public<br>
-    * Yet to start🤔🤔
-  * Search a user by username.
-  * Commenting to the posts.<br>
-    * Yet to start 🤔🤔<br>
-  * Frontend (UI) <br>
-    * Updating on the way.<br>
+ 
 
 #### _`This is a ongoing project and i am adding all the parts step by step..`_
 
