@@ -15,7 +15,7 @@ app.set('view engine','ejs');
 app.set('views',path.join("views"));
 let usersch=require('../models/user.model');
 let tksc=require('../models/token.model');
-const { getMaxListeners } = require('../models/user.model');
+
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
 const store = new MongoDBStore({
