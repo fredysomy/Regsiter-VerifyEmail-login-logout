@@ -21,3 +21,5 @@
 <code>npm install</code><br>
 <code>npm start</code><br>
 
+# Contribution and Issues
+Please add a issue and make a pul request if there are any errors..
