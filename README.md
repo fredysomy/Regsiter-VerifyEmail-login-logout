@@ -14,7 +14,16 @@
 
 #### _`This is a ongoing project and i am adding all the parts step by step..`_
 
-
+### Route Structure
+/feed
+/feed/:id
+/user/profile
+/user/:id
+/user/new
+/user/:id/edit
+/user/blog/:id/edit
+/user/login
+/user/
 
 #### Run the repo <br>
 
