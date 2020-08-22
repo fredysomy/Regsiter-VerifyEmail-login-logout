@@ -11,22 +11,28 @@ app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname,'public')));
 app.set('views',path.join(__dirname,"views"));
 
-mon.connect(process.env.ATLAS_URI, {useNewUrlParser: true, useUnifiedTopology: true });
+mon.connect(process.env.ATLAS_URI, {useNewUrlParser: true, useUnifiedTopology: true }).then(err =>{
+    console.log("err");
+});
 
 mon.connection.once("open", (err)=>{
     console.log("mongodb connected")
 });
+const feedroute=require('./route/feed');
 const userroute=require('./route/use');
-app.get('/',(req,res)=>{
-    
-    if(req.session.user) {
-       
-res.render('main',{dash:'<a href="/user/u">Dashboard</a>'});
-}
-else{res.render('main',{dash: ' '});
-}
+
+app.get('/',(req,res)=>
+{
+    if(req.session.user) 
+    {
+         res.render('main',{dash:'<a href="/user/u">Dashboard</a>'});
+    }
+    else{
+        res.render('main',{dash: ' '});
+    }
 });
 app.use('/user',userroute);
+app.use('/feed',feedroute);
 
 app.listen(8080,()=>{
     console.log("server running on http://localhost:8080/")

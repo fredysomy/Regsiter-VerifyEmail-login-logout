@@ -55,7 +55,7 @@ sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 url=req.get('host')+"/user/verify/"+tk.token;
 const msg = {
   to: somem.email,
-  from: <Your email>,
+  from: 'fredysomy@gmail.com',
   subject: 'Sending with Twilio SendGrid is Fun',
   text: "hi.."+tk.token ,
   html: `<p style="font-size:30;color:red;" align="center">Verify email of ${somem.name}</p><br><a href="${url}"><button align="center">Click Here to Verify</button></a>`,
