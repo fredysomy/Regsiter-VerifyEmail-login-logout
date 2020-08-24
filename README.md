@@ -25,14 +25,15 @@
   * /user/login
   * /user/
 
-#### Run the repo <br>
+
 
 ## Note
-* I have used Sendgrids api key to send emails
+* I have used Sendgrids api key to send emails ( Get their API key)
 * For the database connectivity you need to go to mongodb atlas and create a database and get the MongoURI
-* You need to provide a session id (a random one) .
+* You need to provide a session id (a random one)
 ### All the above requirements must be done and you should make a .env file in the repo with all the API keys.
 
+#### Run the repo <br>
 <code>npm install</code><br>
 <code>npm start</code><br>
 
