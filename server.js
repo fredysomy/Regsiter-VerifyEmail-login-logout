@@ -18,8 +18,8 @@ mon.connect(process.env.ATLAS_URI, {useNewUrlParser: true, useUnifiedTopology: t
 mon.connection.once("open", (err)=>{
     console.log("mongodb connected")
 });
-const feedroute=require('./route/feed');
-const userroute=require('./route/use');
+const feedroute=require('./route/feed.js');
+const userroute=require('./route/use.js');
 
 app.get('/',(req,res)=>
 {
@@ -34,6 +34,6 @@ app.get('/',(req,res)=>
 app.use('/user',userroute);
 app.use('/feed',feedroute);
 
-app.listen(8080,()=>{
+app.listen(8081,()=>{
     console.log("server running on http://localhost:8080/")
 });

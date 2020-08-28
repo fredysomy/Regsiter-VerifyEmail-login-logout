@@ -3,8 +3,6 @@ var path= require('path');
 var bcy=require('bcrypt');
 var nm=require('nodemailer');
 var randtoken=require('rand-token')
-const saltRounds = 10;
-
 require('dotenv').config()
 var bodyParser=require('body-parser');
 const express = require('express');
@@ -12,9 +10,10 @@ const session = require('express-session');
 const MongoDBStore = require('connect-mongodb-session')(session);
 app=express();
 app.set('view engine','ejs');
-app.set('views',path.join("views"));
+app.set('views',path.join("views"));//search
 let usersch=require('../models/user.model');
 let tksc=require('../models/token.model');
+let blsc=require('../models/blog.model');
 
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
@@ -29,10 +28,11 @@ app.use(session({
     unset: 'destroy',
     store: store
 }));
-router.route('/').get((req,res)=> {
+router.route('/').get((req,res)=>
+{
     res.render('index',{err: ""});
     console.log(req.get('host'))
- });
+});
 router.route('/login').get((req,res)=>{
     res.render('login',{err:""});
 })
@@ -44,24 +44,24 @@ router.route('/register').post((req,res)=> {
         somem.name=req.body.name;
         somem.email=req.body.email;
         somem.pass=hash;
-        
-       
+       //localhost:8080/name=fredy&pass=*****
+       //truthy falsy
         somem.save((err,doc)=>{
         if(!err){
             var tk=new tksc({ _userId: somem._id, token: randtoken.generate(16)});
-            tk.save();
+            tk.save().then(()=>{
             const sgMail = require('@sendgrid/mail');
-sgMail.setApiKey(process.env.SENDGRID_API_KEY);
-url=req.get('host')+"/user/verify/"+tk.token;
-const msg = {
-  to: somem.email,
-  from: 'fredysomy@gmail.com',
-  subject: 'Sending with Twilio SendGrid is Fun',
-  text: "hi.."+tk.token ,
-  html: `<p style="font-size:30;color:red;" align="center">Verify email of ${somem.name}</p><br><a href="${url}"><button align="center">Click Here to Verify</button></a>`,
+                sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+                url=req.get('host')+"/user/verify/"+tk.token;
+                const msg = {
+                to: somem.email,
+                from: 'fredysomy@gmail.com',
+                subject: 'Sending with Twilio SendGrid is Fun',
+                text: "hi.."+tk.token ,
+                html: `<p style="font-size:30;color:red;" align="center">Verify email of ${somem.name}</p><br><a href="${url}"><button align="center">${url}</button></a>`,
        };
-            sgMail.send(msg);
-            res.send("email has been sent")
+            sgMail.send(msg)});
+           res.send("main sent")
               
              }
     else{
@@ -100,9 +100,11 @@ router.route('/signin').post((req,res)=>{
             bcy.compare(req.body.pass,user.pass,(err,result)=>{
                 if(result==true){
                     if(user.verify==true)
-                    {req.session.user=user;
-                    res.redirect('/user/u');}
-                    else{
+                    {
+                        req.session.user=user;
+                        res.redirect('/user/u');}
+                    else
+                    {
                         res.render('login',{err:'<h6 style="color:red;"></h6>User not verified</h6><br><a href="/user/login">Try again</a><br>'});
                     }
                 }
