@@ -3,7 +3,7 @@ var mon=require('mongoose');
 var sc2= mon.Schema;
 
 var blogschema=new sc2({
-    nameuser: { type: String, required: true },
+    mailuser: { type: String, required: true },
     head: { type: String, required: true },
     blog: { type: String, required: true }
 });

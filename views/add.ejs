@@ -10,18 +10,19 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
 </head>
 <body>
-    <div align="center">
-        <form action="">
+    <div align="center" style="width:70%;">
+        <form action="/user/add/blg" method="POST">
             <div class="form-group">
                 <label for="exampleInputEmail1">Heading</label>
-                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="head">
                 <small id="emailHelp" class="form-text text-muted">Please give a valid heading</small>
               </div>
               
             <div class="form-group">
                 <label for="exampleFormControlTextarea1">Example textarea</label>
-                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="desc"></textarea>
               </div>
+              <button class="btn btn-primary">SUBMIT</button>
 </form>
 </div></div>
 </body>

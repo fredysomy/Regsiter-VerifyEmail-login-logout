@@ -14,6 +14,7 @@ app.set('views',path.join("views"));//search
 let usersch=require('../models/user.model');
 let tksc=require('../models/token.model');
 let blsc=require('../models/blog.model');
+const blogsc = require('../models/blog.model');
 
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
@@ -123,6 +124,10 @@ router.route('/signin').post((req,res)=>{
 
 router.route('/u').get((req,res)=>{
     if(req.session.user){
+
+       blogsc.find({mailuser:req.session.user.email}).then((user)=>{console.log(user.length)});
+            
+        
        res.render('dashboard',{
             title:req.session.user.realname,
             title2:req.session.user.name,
@@ -143,7 +148,30 @@ router.route('/logout').get((req,res)=>{
     }        
 });
 
-
+router.route('/add').get((req,res)=>{
+    if(req.session.user) {
+    res.render('add')}
+    else{
+        res.redirect('/user/login');
+    }
+});
+router.route('/add/blg').post((req,res)=>{
+    const blgs=new blogsc()
+    blgs.mailuser=req.session.user.email;
+    blgs.head=req.body.head;
+    blgs.blog=req.body.desc;
+    blgs.save((err)=>{
+        if(err){
+            console.log("error while saving")
+        }
+        else{
+            console.log("succes")
+            res.redirect('/user/u');
+        }
+    });
+    
+    
+});
 
 
 module.exports=router;
