@@ -172,6 +172,19 @@ router.route('/add/blg').post((req,res)=>{
     
     
 });
+router.route('/blog/:id').get((req,res)=>{
+    if(req.session.user) {
+        blogsc.findOne({_id:req.params.id,mailuser:req.session.user.email}).then(data => {
+            res.render('editupdate',{hea:data.head,des:data.blog,id:data._id})
+        });
+    }
+        else{
+            res.redirect('/user/login');
+        }
+});
+router.route('/edit/blg').post((req,res)=>{
+    
+    blogsc.updateOne({_id:req.body.id},{"$set":{"head":req.body.head,"blog":req.body.desc}}).then(res.redirect('/user/u'))
 
-
+});
 module.exports=router;
