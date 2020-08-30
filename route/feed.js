@@ -15,9 +15,11 @@ app.set('view engine','ejs');
 app.set('views',path.join("views"));
 let usersch=require('../models/user.model');
 let tksc=require('../models/token.model');
-rout.route('/').get((req,res)=>{
-    res.send("fsdfsds")
+let blogsc = require('../models/blog.model');
+rout.route('/:id').get((req,res)=>{
+    blogsc.findById(req.params.id).then(data=> res.json(data));
 });
+
 
 
 module.exports=rout;
