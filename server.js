@@ -37,6 +37,6 @@ app.get('/',(req,res)=>
 app.use('/user',userroute);
 app.use('/feed',feedroute);
 
-app.listen(8081,()=>{
+app.listen(8080,()=>{
     console.log("server running on http://localhost:8080/")
 });
