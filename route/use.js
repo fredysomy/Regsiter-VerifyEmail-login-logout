@@ -184,7 +184,7 @@ router.route('/blog/:id').get((req,res)=>{
 });
 router.route('/edit/blg').post((req,res)=>{
     
-    blogsc.updateOne({_id:req.body.id},{"$set":{"head":req.body.head,"blog":req.body.desc}}).then(res.redirect('/user/u'))
+    blogsc.updateOne({_id:req.body.id,mailuser:req.session.user.email},{"$set":{"head":req.body.head,"blog":req.body.desc}}).then(res.redirect('/user/u'))
 
 });
 module.exports=router;
