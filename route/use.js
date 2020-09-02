@@ -187,4 +187,26 @@ router.route('/edit/blg').post((req,res)=>{
     blogsc.updateOne({_id:req.body.id,mailuser:req.session.user.email},{"$set":{"head":req.body.head,"blog":req.body.desc}}).then(res.redirect('/user/u'))
 
 });
+
+router.route('/u/credupdate').get((req,res)=>{
+    if(req.session.user) {
+        usersch.findOne({mail:req.session.user.email}).then(data => {
+            res.render('credupdate')
+        });
+    }
+        else{
+            res.redirect('/user/login');
+        }
+});
+
+router.route('/update/cred').post((req,res)=>{
+    if(req.body.pass==req.body.pass2){
+        bcy.hash(req.body.pass2,10,(err,doc)=>{
+       usersch.updateOne({email:req.session.user.email},{"$set":{"pass":doc}}).then(res.redirect('/user/u'))
+console.log(doc)
+    })}
+    else{
+        res.render('credupdate')
+    }
+});
 module.exports=router;
