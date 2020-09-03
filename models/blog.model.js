@@ -5,7 +5,8 @@ var sc2= mon.Schema;
 var blogschema=new sc2({
     mailuser: { type: String, required: true },
     head: { type: String, required: true },
-    blog: { type: String, required: true }
+    blog: { type: String, required: true },
+    daten:{type: Date}
 });
 
 var blogsc=mon.model('blogsc',blogschema);

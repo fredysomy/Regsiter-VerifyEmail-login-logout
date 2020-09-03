@@ -57,9 +57,9 @@ router.route('/register').post((req,res)=> {
                 const msg = {
                 to: somem.email,
                 from: 'fredysomy@gmail.com',
-                subject: 'Sending with Twilio SendGrid is Fun',
+                subject: 'Verify Your Email to Continue Blogging',
                 text: "hi.."+tk.token ,
-                html: `<p style="font-size:30;color:red;" align="center">Verify email of ${somem.name}</p><br><a href="${url}"><button align="center">${url}</button></a>`,
+                html: `<p style="font-size:30;color:red;" align="center">Verify email of ${somem.name}</p><br><a href="${url}">${url}</a>`,
        };
             sgMail.send(msg)});
            res.send("main sent")
@@ -160,6 +160,7 @@ router.route('/add/blg').post((req,res)=>{
     blgs.mailuser=req.session.user.email;
     blgs.head=req.body.head;
     blgs.blog=req.body.desc;
+    blgs.daten=Date.now();
     blgs.save((err)=>{
         if(err){
             console.log("error while saving")
