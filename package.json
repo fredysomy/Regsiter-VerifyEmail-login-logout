@@ -20,7 +20,7 @@
     "express": "^4.17.1",
     "express-session": "^1.17.1",
     "jsdom": "^16.4.0",
-    "markdown-it": "^11.0.0",
+    "markdown-it": "^12.3.2",
     "mongoose": "^5.9.28",
     "nodemailer": "^6.4.11",
     "nodemailer-sparkpost-transport": "^2.2.0",
